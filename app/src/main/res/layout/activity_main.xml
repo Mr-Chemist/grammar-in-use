@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/surface"
+    android:layoutDirection="rtl">
+
+    <!-- Minimal Sharp Editorial Top Bar (hidden in Fullscreen mode) -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="6dp"
+        android:background="@color/surface">
+
+        <TextView
+            android:id="@+id/btnMenu"
+            android:layout_width="32dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_sharp_btn"
+            android:gravity="center"
+            android:text="☰"
+            android:textSize="15sp"
+            android:textColor="@color/ink_dark" />
+
+        <LinearLayout
+            android:id="@+id/titleBlock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingHorizontal="6dp">
+
+            <TextView
+                android:id="@+id/tvHeaderTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="یونیت ۱ · ص ۲ (آموزش)"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/ink_dark"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/tvHeaderSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Present continuous"
+                android:textSize="10sp"
+                android:textColor="@color/ink_muted"
+                android:maxLines="1"
+                android:ellipsize="end" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btnQuiz"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/bg_pill_primary"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:text="آزمون"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/btnAnswerKey"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/bg_pill_neutral"
+            android:gravity="center"
+            android:paddingHorizontal="7dp"
+            android:text="پاسخ"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/btnBookmark"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/bg_sharp_btn"
+            android:gravity="center"
+            android:text="☆"
+            android:textSize="13sp"
+            android:textColor="@color/ink_muted" />
+
+        <TextView
+            android:id="@+id/btnNote"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/bg_sharp_btn"
+            android:gravity="center"
+            android:text="✎"
+            android:textSize="12sp"
+            android:textColor="@color/ink_muted" />
+
+        <TextView
+            android:id="@+id/btnWarm"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/bg_sharp_btn"
+            android:gravity="center"
+            android:text="☾"
+            android:textSize="12sp"
+            android:textColor="@color/ink_muted" />
+
+        <TextView
+            android:id="@+id/btnFullscreen"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/bg_sharp_btn"
+            android:gravity="center"
+            android:text="⛶"
+            android:textSize="12sp"
+            android:textColor="@color/ink_muted" />
+
+        <TextView
+            android:id="@+id/btnPacks"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/bg_sharp_btn"
+            android:gravity="center"
+            android:text="↓"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/ink_muted" />
+
+        <TextView
+            android:id="@+id/btnCheckPage"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/bg_pill_neutral"
+            android:gravity="center"
+            android:paddingHorizontal="6dp"
+            android:text="○ ص"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:textColor="@color/ink_muted" />
+
+        <TextView
+            android:id="@+id/btnCheckUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginStart="3dp"
+            android:background="@drawable/bg_pill_neutral"
+            android:gravity="center"
+            android:paddingHorizontal="6dp"
+            android:text="☐ ی"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:textColor="@color/ink_muted" />
+    </LinearLayout>
+
+    <!-- Ultra-thin 2dp Book Progress Bar -->
+    <ProgressBar
+        android:id="@+id/bookProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:max="100"
+        android:progress="0"
+        android:progressTint="@color/primary"
+        android:progressBackgroundTint="@color/border" />
+
+    <!-- Main Full-Height Vertical Page Viewport -->
+    <FrameLayout
+        android:id="@+id/pageViewport"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/bg_reader">
+
+        <ir.hiwa.grammarinuse.ZoomablePageView
+            android:id="@+id/pageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Download / Loading Overlay -->
+        <LinearLayout
+            android:id="@+id/loadingOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="24dp"
+            android:background="#F2F8FAFC"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/packSpinner"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+
+            <TextView
+                android:id="@+id/tvLoadingStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="در حال دریافت بسته..."
+                android:textSize="13sp"
+                android:textColor="@color/ink_dark" />
+
+            <TextView
+                android:id="@+id/btnRetryDownload"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_pill_primary"
+                android:gravity="center"
+                android:paddingHorizontal="20dp"
+                android:text="تلاش مجدد"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Floating Exit-Fullscreen Button (visible only in Fullscreen mode) -->
+        <TextView
+            android:id="@+id/btnExitFullscreen"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_gravity="top|start"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_sharp_btn"
+            android:gravity="center"
+            android:text="✕"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/ink_dark"
+            android:alpha="0.88"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!-- Minimal Bottom Dock (Section Pills + SeekBar + Full Controls) -->
+    <LinearLayout
+        android:id="@+id/bottomDock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/surface"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="6dp"
+        android:layoutDirection="ltr">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/border" />
+
+        <!-- Row 1: Prev Page + Section Pills (A/B/C/D) + Auto-Next + A-B + Next Page -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/btnPrevPage"
+                android:layout_width="32dp"
+                android:layout_height="28dp"
+                android:background="@drawable/bg_sharp_btn"
+                android:gravity="center"
+                android:text="‹"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/ink_dark" />
+
+            <HorizontalScrollView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scrollbars="none"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:id="@+id/sectionPillsRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingHorizontal="4dp" />
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/btnNextPage"
+                android:layout_width="32dp"
+                android:layout_height="28dp"
+                android:background="@drawable/bg_sharp_btn"
+                android:gravity="center"
+                android:text="›"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/ink_dark" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvAudioStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="11sp"
+            android:textColor="@color/primary"
+            android:visibility="gone" />
+
+        <!-- Audio Controls Container (hidden on non-unit pages) -->
+        <LinearLayout
+            android:id="@+id/audioControlsBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Row 2: SeekBar + Timestamps -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvPosTime"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0:00"
+                    android:textSize="11sp"
+                    android:textColor="@color/ink_muted" />
+
+                <SeekBar
+                    android:id="@+id/audioSeekBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:progressTint="@color/primary"
+                    android:thumbTint="@color/primary" />
+
+                <TextView
+                    android:id="@+id/tvDurTime"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0:00"
+                    android:textSize="11sp"
+                    android:textColor="@color/ink_muted" />
+            </LinearLayout>
+
+            <!-- Row 3: Speed, PrevSec, -5s, Play/Pause, +5s, NextSec, Repeat -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="2dp">
+
+                <TextView
+                    android:id="@+id/btnSpeed"
+                    android:layout_width="44dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bg_sharp_btn"
+                    android:gravity="center"
+                    android:text="1x"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/ink_dark" />
+
+                <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/btnPrevSec"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:gravity="center"
+                    android:text="⏮"
+                    android:textSize="15sp"
+                    android:textColor="@color/ink_dark" />
+
+                <TextView
+                    android:id="@+id/btnRew5"
+                    android:layout_width="42dp"
+                    android:layout_height="28dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:background="@drawable/bg_pill_neutral"
+                    android:gravity="center"
+                    android:text="«5s"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/ink_dark" />
+
+                <TextView
+                    android:id="@+id/btnPlayPause"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_pill_primary"
+                    android:gravity="center"
+                    android:text="▶"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/btnFwd5"
+                    android:layout_width="42dp"
+                    android:layout_height="28dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:background="@drawable/bg_pill_neutral"
+                    android:gravity="center"
+                    android:text="5s»"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/ink_dark" />
+
+                <TextView
+                    android:id="@+id/btnNextSec"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:gravity="center"
+                    android:text="⏭"
+                    android:textSize="15sp"
+                    android:textColor="@color/ink_dark" />
+
+                <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/btnRepeat"
+                    android:layout_width="32dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bg_sharp_btn"
+                    android:gravity="center"
+                    android:text="↻"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/ink_muted" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

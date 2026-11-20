@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#0F766E</color>
+    <color name="primary_light">#CCFBF1</color>
+    <color name="primary_soft">#F0FDFA</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="bg_reader">#E2E8F0</color>
+    <color name="bg_warm">#E8DEC8</color>
+    <color name="ink_dark">#0F172A</color>
+    <color name="ink_muted">#64748B</color>
+    <color name="border">#CBD5E1</color>
+    <color name="success">#15803D</color>
+    <color name="success_bg">#DCFCE7</color>
+    <color name="amber">#B45309</color>
+    <color name="amber_bg">#FEF3C7</color>
+    <color name="danger">#DC2626</color>
+</resources>
