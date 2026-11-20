@@ -1,38 +1,86 @@
-# گرامر این یوز — نسخه کاتلین نیتیو (فوق‌سبک ۳ تا ۵ مگابایت · آماده مایکت و گیت‌هاب)
+Grammar in Use — Native Android Reader
 
-## مراحل کامل ساخت APK بدون Android Studio و انتشار در مایکت
+A lightweight, native Kotlin Android application for studying grammar lessons with synchronized section audio, interactive quizzes, and offline-first pack caching.
 
-### ۱. ساخت ۶ بسته ZIP (هر ۳۰ یونیت با هم) و داده‌های کتاب
-```cmd
-pip install -r scripts/requirements.txt
-python scripts/prepare_book_assets.py --pdf "E:\EngData\Intermediate_Grammar_in_Use.pdf" --audio "E:\EngData\Audio CD"
-```
-- اول عکس `arvan_packs\preview_u004_lesson.jpg` را چک کنید تا از حذف کامل لوگوی سبز و آدرس مطمئن شوید.
+Designed for minimal APK size (~3–5 MB per ABI), zero external media bloat in the repository, and automated multi-APK release builds (arm64-v8a and armeabi-v7a) via GitHub Actions.
 
-### ۲. آپلود ۶ فایل ZIP در ابر آروان (Drag & Drop)
-در پنل ابر آروان وارد صندوقچه `grammar-in-use-assets` شوید، پوشه `packs` بسازید (عمومی / Public) و ۶ فایل داخل `arvan_packs\packs\` (`pack_1.zip` تا `pack_5.zip` + `pack_resources.zip`) را بکشید و رها کنید.
+Features
 
-### ۳. ساخت کلید امضای اختصاصی (Keystore) برای مایکت (فقط یک‌بار)
-اگر Java JDK نصب دارید، در CMD بزنید (رمزها را یادداشت کنید و فایل `release.keystore` را جای امن نگه دارید — هرگز در GitHub آپلودش نکنید!):
-```cmd
+Vertical Full-Height Reader: Custom ZoomablePageView with pinch-to-zoom, double-tap zoom, swipe navigation, warm eye-comfort mode, and one-tap fullscreen mode.
+
+Direct Section Audio Playback: Tap directly on lesson sections (A, B, C, ...) or use quick section pills with native MediaPlayer controls (seek bar, -5s / +5s, variable playback speed 0.75x–1.5x, repeat, optional auto-next, and A–B shadowing loop).
+
+Offline Pack Architecture: Downloads compact 30-unit ZIP bundles on demand via streaming ZipInputStream extraction and caches them locally for permanent offline access.
+
+Progress Tracking & Study Tools: Remembers the last viewed page, tracks separate per-page and per-unit checklists, daily study streak, bookmarks, personal unit notes, and quick Answer Key popups.
+
+Interactive Quizzes & Back-Matter Resources: Unit-linked multiple-choice (MCQ) and smart-graded written exercises, plus full access to Appendices, Additional Exercises, and Study Guide.
+
+Tech Stack
+
+Language: Kotlin (AndroidX + ViewBinding, zero heavy UI frameworks)
+
+Audio & Storage: Native Android MediaPlayer, SharedPreferences, HttpURLConnection, and ZipInputStream
+
+Build & CI: Gradle Kotlin DSL (AGP 8.7 / Kotlin 2.0), R8 code & resource shrinking, ABI splits (arm64-v8a & armeabi-v7a), and GitHub Actions
+
+Asset Pipeline: Python 3 (pypdfium2, pdfplumber, Pillow) for user-supplied local book/audio preprocessing
+
+Repository Structure
+
+grammar-in-use/
+├── .github/workflows/build-myket.yml   # Automated signed multi-APK CI workflow
+├── app/
+│   ├── build.gradle.kts                # ABI splits, R8 minification, release signing
+│   └── src/main/
+│       ├── assets/                     # Metadata JSON (book_data.json, quiz_data.json)
+│       ├── java/ir/hiwa/grammarinuse/  # Native Kotlin source
+│       └── res/                        # XML layouts, themes, drawables, mipmaps
+├── scripts/
+│   ├── prepare_book_assets.py          # Local preprocessing script (packs & metadata)
+│   └── requirements.txt
+├── build.gradle.kts
+├── settings.gradle.kts
+└── gradle.properties
+
+
+Building Signed Release APKs (GitHub Actions)
+
+No local Android Studio installation is required.
+
+Generate an Android release keystore locally:
+
 keytool -genkey -v -keystore release.keystore -alias grammar_key -keyalg RSA -keysize 2048 -validity 10000
-```
-سپس خروجی Base64 آن را بگیرید تا در GitHub Secrets بگذارید:
-```powershell
-[Convert]::ToBase64String([IO.File]::ReadAllBytes("release.keystore")) | Set-Clipboard
-```
 
-### ۴. قرار دادن در GitHub و ساخت خودکار دو APK مایکت (بدون Android Studio)
-1. یک مخزن (Repository) جدید در GitHub بسازید (فایل `.gitignore` طوری تنظیم شده که فایل‌های PDF و `arvan_packs` و Keystore آپلود نمی‌شوند).
-2. در تنظیمات مخزن GitHub بروید به **Settings → Secrets and variables → Actions** و این ۴ Secret را اضافه کنید:
-   - `KEYSTORE_BASE64`: متنی که در مرحله ۳ کپی کردید
-   - `KEYSTORE_PASSWORD`: رمز Keystore
-   - `KEY_ALIAS`: `grammar_key`
-   - `KEY_PASSWORD`: رمز Key
-3. کد پروژه را روی GitHub بفرستید (`git push` یا آپلود در GitHub).
-4. وارد تب **Actions** در GitHub شوید؛ ورک‌فلو `Build Myket Release APKs` در حدود ۲ دقیقه هر دو فایل زیر را می‌سازد و در بخش **Artifacts → myket-release-apks** برای دانلود آماده می‌کند:
-   - `app-arm64-v8a-release.apk` (`versionCode: 2001` — گوشی‌های جدید و اندروید ۱۵+)
-   - `app-armeabi-v7a-release.apk` (`versionCode: 1001` — گوشی‌های قدیمی‌تر)
 
-### ۵. انتشار در مایکت
-در پنل توسعه‌دهندگان مایکت، یک برنامه جدید با شناسه `ir.hiwa.grammarinuse` بسازید و **هر دو فایل APK** را هم‌زمان در یک انتشار بارگذاری و ارسال کنید.
+Add the following secrets under Settings → Secrets and variables → Actions in your GitHub repository:
+
+KEYSTORE_BASE64: Base64-encoded contents of release.keystore
+
+KEYSTORE_PASSWORD: Keystore password
+
+KEY_ALIAS: grammar_key
+
+KEY_PASSWORD: Key password
+
+Push to main (or trigger Build Myket Release APKs manually under the Actions tab).
+
+Download myket-release-apks from the workflow artifacts containing:
+
+app-arm64-v8a-release.apk (versionCode: 2001)
+
+app-armeabi-v7a-release.apk (versionCode: 1001)
+
+Local Asset Preparation
+
+This repository contains source code only and does not host any copyrighted book PDFs, page images, or audio recordings. To prepare your own local study packs:
+
+pip install -r scripts/requirements.txt
+python scripts/prepare_book_assets.py --pdf "/path/to/book.pdf" --audio "/path/to/Audio CD"
+
+
+Upload the generated arvan_packs/packs/*.zip files to your S3-compatible object storage bucket and set ArvanConfig.BASE_URL in app/src/main/java/ir/hiwa/grammarinuse/Models.kt.
+
+License
+
+This project's source code is released under the MIT License. Third-party study materials remain the property of their respective copyright holders.
