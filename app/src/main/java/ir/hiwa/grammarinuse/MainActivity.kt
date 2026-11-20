@@ -15,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -70,6 +71,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Fix Android 15+ Edge-to-Edge so topBar never sits behind status bar/notch
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { v, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(bars.left, if (isFullscreen) 0 else bars.top, bars.right, bars.bottom)
+            insets
+        }
 
         repo = BookRepository(this)
         store = ProgressStore(this)
@@ -220,6 +228,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             controller.show(WindowInsetsCompat.Type.statusBars())
         }
+        ViewCompat.requestApplyInsets(binding.rootLayout)
     }
 
     private fun applyWarmModeUI() {

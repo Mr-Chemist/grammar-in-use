@@ -64,6 +64,7 @@ object Dialogs {
             minLines = 5
             gravity = Gravity.TOP or Gravity.START
             layoutDirection = View.LAYOUT_DIRECTION_RTL
+            fitsSystemWindows = true
             setPadding((14 * dp).toInt(), (12 * dp).toInt(), (14 * dp).toInt(), (12 * dp).toInt())
         }
         AlertDialog.Builder(context)
@@ -85,6 +86,7 @@ object Dialogs {
         val root = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             layoutDirection = View.LAYOUT_DIRECTION_RTL
+            fitsSystemWindows = true
             setBackgroundColor(Color.parseColor("#F8FAFC"))
             setPadding(px(14), px(14), px(14), px(14))
         }
@@ -219,6 +221,7 @@ object Dialogs {
         val root = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             layoutDirection = View.LAYOUT_DIRECTION_RTL
+            fitsSystemWindows = true
             setBackgroundColor(Color.parseColor("#F8FAFC"))
         }
 

@@ -90,6 +90,7 @@ object QuizDialog {
         val root = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             layoutDirection = View.LAYOUT_DIRECTION_RTL
+            fitsSystemWindows = true
             setBackgroundColor(Color.parseColor("#F8FAFC"))
         }
 
