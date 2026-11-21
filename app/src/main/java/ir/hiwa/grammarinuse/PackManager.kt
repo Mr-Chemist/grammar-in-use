@@ -10,11 +10,11 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.zip.ZipInputStream
 
 /**
- * Native streaming ArvanCloud ZIP pack downloader & extractor.
- * Uses HttpURLConnection + ZipInputStream (zero RAM spikes, max 6 requests for the entire book!).
+ * Native streaming ZIP pack downloader & extractor (v2 PDF-native packs).
+ * Uses HttpURLConnection + ZipInputStream (zero RAM spikes, max 6 requests for the entire book).
  */
 class PackManager(context: Context) {
-    private val rootDir = File(context.filesDir, "book_packs")
+    private val rootDir = File(context.filesDir, "book_packs_v2")
     private val markersDir = File(rootDir, "_markers")
     private val locks = ConcurrentHashMap<String, Any>()
 

@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-val baseVersionCode = 1
+val baseVersionCode = 2
 
 android {
     namespace = "ir.hiwa.grammarinuse"
@@ -14,11 +14,11 @@ android {
         minSdk = 24
         targetSdk = 35
         versionCode = baseVersionCode
-        versionName = "1.0.0"
+        versionName = "2.0.0"
     }
 
     // Myket Multi-APK official ABI split:
-    // armeabi-v7a -> versionCode 1001 | arm64-v8a -> versionCode 2001 (always higher!)
+    // armeabi-v7a -> versionCode 1002 | arm64-v8a -> versionCode 2002 (always higher!)
     splits {
         abi {
             isEnable = true

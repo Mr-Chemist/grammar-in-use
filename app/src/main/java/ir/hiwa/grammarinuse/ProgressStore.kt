@@ -1,10 +1,8 @@
 package ir.hiwa.grammarinuse
 
 import android.content.Context
+import org.json.JSONArray
 import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class ProgressStore(context: Context) {
     private val prefs = context.getSharedPreferences("grammar_in_use_prefs", Context.MODE_PRIVATE)
@@ -25,32 +23,13 @@ class ProgressStore(context: Context) {
         get() = prefs.getBoolean("warm_mode", false)
         set(value) = prefs.edit().putBoolean("warm_mode", value).apply()
 
-    val streakCount: Int
-        get() = prefs.getInt("streak", 1)
+    var language: AppLang
+        get() = AppLang.fromCode(prefs.getString("app_lang", "en"))
+        set(value) = prefs.edit().putString("app_lang", value.code).apply()
 
-    init {
-        updateDailyStreak()
-    }
-
-    private fun updateDailyStreak() {
-        val fmt = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        val today = fmt.format(Date())
-        val last = prefs.getString("last_date", "") ?: ""
-        val curr = prefs.getInt("streak", 0)
-        if (last == today) {
-            if (curr < 1) prefs.edit().putInt("streak", 1).apply()
-            return
-        }
-        val next = if (last.isNotEmpty()) {
-            try {
-                val diff = ((fmt.parse(today)!!.time - fmt.parse(last)!!.time) / 86_400_000L).toInt()
-                if (diff == 1) curr + 1 else 1
-            } catch (_: Exception) {
-                1
-            }
-        } else 1
-        prefs.edit().putString("last_date", today).putInt("streak", next).apply()
-    }
+    var hasSeenOnboarding: Boolean
+        get() = prefs.getBoolean("seen_onboarding_v2", false)
+        set(value) = prefs.edit().putBoolean("seen_onboarding_v2", value).apply()
 
     private fun getBoolMap(key: String): MutableMap<String, Boolean> {
         val raw = prefs.getString(key, "{}") ?: "{}"
@@ -89,9 +68,6 @@ class ProgressStore(context: Context) {
         return next
     }
 
-    fun getNote(unit: Int): String = prefs.getString("note_$unit", "") ?: ""
-    fun setNote(unit: Int, text: String) = prefs.edit().putString("note_$unit", text).apply()
-
     fun getQuizScore(unit: Int): Pair<Int, Int>? {
         val raw = prefs.getString("quiz_$unit", null) ?: return null
         val parts = raw.split("/")
@@ -110,5 +86,100 @@ class ProgressStore(context: Context) {
     fun countCompletedUnits(units: List<UnitSummary>): Int {
         val m = getBoolMap("done_units")
         return units.count { m[it.unitNumber.toString()] == true }
+    }
+
+    fun hasPageAnnotations(pageId: String): Boolean {
+        val raw = prefs.getString("ann_$pageId", null) ?: return false
+        return raw.length > 25
+    }
+
+    fun getPageAnnotations(pageId: String): PageAnnotations {
+        val raw = prefs.getString("ann_$pageId", null) ?: return PageAnnotations()
+        return try {
+            val root = JSONObject(raw)
+            val strokes = mutableListOf<AnnotationStroke>()
+            val sArr = root.optJSONArray("strokes")
+            if (sArr != null) {
+                for (i in 0 until sArr.length()) {
+                    val so = sArr.getJSONObject(i)
+                    val pts = mutableListOf<StrokePoint>()
+                    val pArr = so.optJSONArray("pts")
+                    if (pArr != null) {
+                        var j = 0
+                        while (j + 1 < pArr.length()) {
+                            pts.add(StrokePoint(pArr.getDouble(j).toFloat(), pArr.getDouble(j + 1).toFloat()))
+                            j += 2
+                        }
+                    }
+                    if (pts.isNotEmpty()) {
+                        strokes.add(
+                            AnnotationStroke(
+                                color = so.getInt("c"),
+                                widthDp = so.optDouble("w", 3.0).toFloat(),
+                                isHighlighter = so.optBoolean("h", false),
+                                points = pts
+                            )
+                        )
+                    }
+                }
+            }
+            val notes = mutableListOf<TextAnnotation>()
+            val nArr = root.optJSONArray("notes")
+            if (nArr != null) {
+                for (i in 0 until nArr.length()) {
+                    val no = nArr.getJSONObject(i)
+                    notes.add(
+                        TextAnnotation(
+                            id = no.optString("id", "n_$i"),
+                            x = no.optDouble("x", 0.5).toFloat(),
+                            y = no.optDouble("y", 0.5).toFloat(),
+                            text = no.optString("t", ""),
+                            color = no.optInt("c", 0xFF0F172A.toInt())
+                        )
+                    )
+                }
+            }
+            PageAnnotations(strokes, notes)
+        } catch (_: Exception) {
+            PageAnnotations()
+        }
+    }
+
+    fun savePageAnnotations(pageId: String, ann: PageAnnotations) {
+        if (ann.isEmpty()) {
+            prefs.edit().remove("ann_$pageId").apply()
+            return
+        }
+        val root = JSONObject()
+        val sArr = JSONArray()
+        for (st in ann.strokes) {
+            if (st.points.isEmpty()) continue
+            val so = JSONObject()
+            so.put("c", st.color)
+            so.put("w", st.widthDp.toDouble())
+            so.put("h", st.isHighlighter)
+            val pArr = JSONArray()
+            for (pt in st.points) {
+                pArr.put(Math.round(pt.x * 10000.0) / 10000.0)
+                pArr.put(Math.round(pt.y * 10000.0) / 10000.0)
+            }
+            so.put("pts", pArr)
+            sArr.put(so)
+        }
+        root.put("strokes", sArr)
+
+        val nArr = JSONArray()
+        for (nt in ann.notes) {
+            if (nt.text.isBlank()) continue
+            val no = JSONObject()
+            no.put("id", nt.id)
+            no.put("x", Math.round(nt.x * 10000.0) / 10000.0)
+            no.put("y", Math.round(nt.y * 10000.0) / 10000.0)
+            no.put("t", nt.text)
+            no.put("c", nt.color)
+            nArr.put(no)
+        }
+        root.put("notes", nArr)
+        prefs.edit().putString("ann_$pageId", root.toString()).apply()
     }
 }

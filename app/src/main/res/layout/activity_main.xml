@@ -1,455 +1,625 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rootLayout"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/outerContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/surface"
-    android:layoutDirection="rtl"
-    android:fitsSystemWindows="true">
+    android:background="@color/surface">
 
-    <!-- Minimal Sharp Editorial Top Bar (hidden in Fullscreen mode) -->
     <LinearLayout
-        android:id="@+id/topBar"
+        android:id="@+id/rootLayout"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="6dp"
-        android:background="@color/surface">
-
-        <TextView
-            android:id="@+id/btnMenu"
-            android:layout_width="32dp"
-            android:layout_height="30dp"
-            android:background="@drawable/bg_sharp_btn"
-            android:gravity="center"
-            android:text="☰"
-            android:textSize="15sp"
-            android:textColor="@color/ink_dark" />
-
-        <LinearLayout
-            android:id="@+id/titleBlock"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingHorizontal="6dp">
-
-            <TextView
-                android:id="@+id/tvHeaderTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="یونیت ۱ · ص ۲ (آموزش)"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="@color/ink_dark"
-                android:maxLines="1"
-                android:ellipsize="end" />
-
-            <TextView
-                android:id="@+id/tvHeaderSubtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Present continuous"
-                android:textSize="10sp"
-                android:textColor="@color/ink_muted"
-                android:maxLines="1"
-                android:ellipsize="end" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/btnQuiz"
-            android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:layout_marginStart="3dp"
-            android:background="@drawable/bg_pill_primary"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:text="آزمون"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/btnAnswerKey"
-            android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:layout_marginStart="3dp"
-            android:background="@drawable/bg_pill_neutral"
-            android:gravity="center"
-            android:paddingHorizontal="7dp"
-            android:text="پاسخ"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/btnBookmark"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="3dp"
-            android:background="@drawable/bg_sharp_btn"
-            android:gravity="center"
-            android:text="☆"
-            android:textSize="13sp"
-            android:textColor="@color/ink_muted" />
-
-        <TextView
-            android:id="@+id/btnNote"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="3dp"
-            android:background="@drawable/bg_sharp_btn"
-            android:gravity="center"
-            android:text="✎"
-            android:textSize="12sp"
-            android:textColor="@color/ink_muted" />
-
-        <TextView
-            android:id="@+id/btnWarm"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="3dp"
-            android:background="@drawable/bg_sharp_btn"
-            android:gravity="center"
-            android:text="☾"
-            android:textSize="12sp"
-            android:textColor="@color/ink_muted" />
-
-        <TextView
-            android:id="@+id/btnFullscreen"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="3dp"
-            android:background="@drawable/bg_sharp_btn"
-            android:gravity="center"
-            android:text="⛶"
-            android:textSize="12sp"
-            android:textColor="@color/ink_muted" />
-
-        <TextView
-            android:id="@+id/btnPacks"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="3dp"
-            android:background="@drawable/bg_sharp_btn"
-            android:gravity="center"
-            android:text="↓"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="@color/ink_muted" />
-
-        <TextView
-            android:id="@+id/btnCheckPage"
-            android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:layout_marginStart="3dp"
-            android:background="@drawable/bg_pill_neutral"
-            android:gravity="center"
-            android:paddingHorizontal="6dp"
-            android:text="○ ص"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:textColor="@color/ink_muted" />
-
-        <TextView
-            android:id="@+id/btnCheckUnit"
-            android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:layout_marginStart="3dp"
-            android:background="@drawable/bg_pill_neutral"
-            android:gravity="center"
-            android:paddingHorizontal="6dp"
-            android:text="☐ ی"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:textColor="@color/ink_muted" />
-    </LinearLayout>
-
-    <!-- Ultra-thin 2dp Book Progress Bar -->
-    <ProgressBar
-        android:id="@+id/bookProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:max="100"
-        android:progress="0"
-        android:progressTint="@color/primary"
-        android:progressBackgroundTint="@color/border" />
-
-    <!-- Main Full-Height Vertical Page Viewport -->
-    <FrameLayout
-        android:id="@+id/pageViewport"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/bg_reader">
-
-        <ir.hiwa.grammarinuse.ZoomablePageView
-            android:id="@+id/pageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!-- Download / Loading Overlay -->
-        <LinearLayout
-            android:id="@+id/loadingOverlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="24dp"
-            android:background="#F2F8FAFC"
-            android:visibility="gone">
-
-            <ProgressBar
-                android:id="@+id/packSpinner"
-                android:layout_width="36dp"
-                android:layout_height="36dp" />
-
-            <TextView
-                android:id="@+id/tvLoadingStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:text="در حال دریافت بسته..."
-                android:textSize="13sp"
-                android:textColor="@color/ink_dark" />
-
-            <TextView
-                android:id="@+id/btnRetryDownload"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_pill_primary"
-                android:gravity="center"
-                android:paddingHorizontal="20dp"
-                android:text="تلاش مجدد"
-                android:textColor="#FFFFFF"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <!-- Floating Exit-Fullscreen Button (visible only in Fullscreen mode) -->
-        <TextView
-            android:id="@+id/btnExitFullscreen"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_gravity="top|start"
-            android:layout_margin="10dp"
-            android:background="@drawable/bg_sharp_btn"
-            android:gravity="center"
-            android:text="✕"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@color/ink_dark"
-            android:alpha="0.88"
-            android:visibility="gone" />
-    </FrameLayout>
-
-    <!-- Minimal Bottom Dock (Section Pills + SeekBar + Full Controls) -->
-    <LinearLayout
-        android:id="@+id/bottomDock"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/surface"
-        android:paddingHorizontal="8dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="6dp"
-        android:layoutDirection="ltr">
+        android:layoutDirection="ltr"
+        android:fitsSystemWindows="true">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="4dp"
-            android:background="@color/border" />
-
-        <!-- Row 1: Prev Page + Section Pills (A/B/C/D) + Auto-Next + A-B + Next Page -->
+        <!-- Minimal Sharp Editorial Top Bar (hidden in Fullscreen mode) -->
         <LinearLayout
+            android:id="@+id/topBar"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="46dp"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:paddingHorizontal="6dp"
+            android:background="@color/surface">
 
             <TextView
-                android:id="@+id/btnPrevPage"
-                android:layout_width="32dp"
+                android:id="@+id/btnMenu"
+                android:layout_width="30dp"
                 android:layout_height="28dp"
                 android:background="@drawable/bg_sharp_btn"
                 android:gravity="center"
-                android:text="‹"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:text="☰"
+                android:textSize="14sp"
                 android:textColor="@color/ink_dark" />
 
-            <HorizontalScrollView
+            <LinearLayout
+                android:id="@+id/titleBlock"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:scrollbars="none"
-                android:fillViewport="true">
+                android:orientation="vertical"
+                android:paddingHorizontal="5dp">
 
-                <LinearLayout
-                    android:id="@+id/sectionPillsRow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:paddingHorizontal="4dp" />
-            </HorizontalScrollView>
+                <TextView
+                    android:id="@+id/tvHeaderTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Unit 1 · p. 2 (Lesson)"
+                    android:textSize="11.5sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/ink_dark"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+                <TextView
+                    android:id="@+id/tvHeaderSubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Present continuous"
+                    android:textSize="9.5sp"
+                    android:textColor="@color/ink_muted"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/btnNextPage"
-                android:layout_width="32dp"
-                android:layout_height="28dp"
+                android:id="@+id/btnQuiz"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_pill_primary"
+                android:gravity="center"
+                android:paddingHorizontal="8dp"
+                android:text="Quiz"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/btnAnswerKey"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_pill_neutral"
+                android:gravity="center"
+                android:paddingHorizontal="7dp"
+                android:text="Key"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/btnBookmark"
+                android:layout_width="25dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="2dp"
                 android:background="@drawable/bg_sharp_btn"
                 android:gravity="center"
-                android:text="›"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/ink_dark" />
+                android:text="☆"
+                android:textSize="13sp"
+                android:textColor="@color/ink_muted" />
+
+            <TextView
+                android:id="@+id/btnPen"
+                android:layout_width="25dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_sharp_btn"
+                android:gravity="center"
+                android:text="✎"
+                android:textSize="12sp"
+                android:textColor="@color/ink_muted" />
+
+            <TextView
+                android:id="@+id/btnFullscreen"
+                android:layout_width="25dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_sharp_btn"
+                android:gravity="center"
+                android:text="⛶"
+                android:textSize="12sp"
+                android:textColor="@color/ink_muted" />
+
+            <ImageView
+                android:id="@+id/btnCheckPage"
+                android:layout_width="25dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_sharp_btn"
+                android:padding="4dp"
+                android:src="@drawable/ic_page_check"
+                android:contentDescription="Page Completed" />
+
+            <ImageView
+                android:id="@+id/btnCheckUnit"
+                android:layout_width="25dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_sharp_btn"
+                android:padding="4dp"
+                android:src="@drawable/ic_unit_check"
+                android:contentDescription="Unit Completed" />
+
+            <ImageView
+                android:id="@+id/btnSettings"
+                android:layout_width="25dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_sharp_btn"
+                android:padding="4dp"
+                android:src="@drawable/ic_settings"
+                android:contentDescription="Settings" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvAudioStatus"
+        <!-- Ultra-thin 2dp Book Progress Bar -->
+        <ProgressBar
+            android:id="@+id/bookProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="11sp"
-            android:textColor="@color/primary"
-            android:visibility="gone" />
+            android:layout_height="2dp"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="@color/primary"
+            android:progressBackgroundTint="@color/border" />
 
-        <!-- Audio Controls Container (hidden on non-unit pages) -->
+        <!-- Main Full-Height Vertical Page Viewport -->
+        <FrameLayout
+            android:id="@+id/pageViewport"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/bg_reader">
+
+            <ir.hiwa.grammarinuse.ZoomablePageView
+                android:id="@+id/pageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Minimalist Floating Paint & Sticky-Note Toolbar (shown when Pen mode is active) -->
+            <LinearLayout
+                android:id="@+id/penToolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:background="@drawable/bg_sharp_btn"
+                android:elevation="6dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="6dp"
+                android:layoutDirection="ltr"
+                android:visibility="gone">
+
+                <!-- Row 1: Tools + Undo + Clear + Done -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/toolPen"
+                        android:layout_width="30dp"
+                        android:layout_height="28dp"
+                        android:gravity="center"
+                        android:text="✎"
+                        android:textSize="14sp"
+                        android:background="@drawable/bg_pill_primary"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/toolHighlighter"
+                        android:layout_width="30dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="4dp"
+                        android:gravity="center"
+                        android:text="🖍"
+                        android:textSize="13sp"
+                        android:background="@drawable/bg_sharp_btn" />
+
+                    <TextView
+                        android:id="@+id/toolTextNote"
+                        android:layout_width="30dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="4dp"
+                        android:gravity="center"
+                        android:text="T"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/ink_dark"
+                        android:background="@drawable/bg_sharp_btn" />
+
+                    <TextView
+                        android:id="@+id/toolEraser"
+                        android:layout_width="30dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="4dp"
+                        android:gravity="center"
+                        android:text="⌫"
+                        android:textSize="13sp"
+                        android:textColor="@color/ink_dark"
+                        android:background="@drawable/bg_sharp_btn" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="18dp"
+                        android:layout_marginHorizontal="6dp"
+                        android:background="@color/border" />
+
+                    <TextView
+                        android:id="@+id/btnPenUndo"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:gravity="center"
+                        android:text="↶"
+                        android:textSize="15sp"
+                        android:textColor="@color/ink_dark"
+                        android:background="@drawable/bg_sharp_btn" />
+
+                    <TextView
+                        android:id="@+id/btnPenClear"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="4dp"
+                        android:gravity="center"
+                        android:text="🗑"
+                        android:textSize="13sp"
+                        android:background="@drawable/bg_sharp_btn" />
+
+                    <TextView
+                        android:id="@+id/btnPenDone"
+                        android:layout_width="30dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="6dp"
+                        android:gravity="center"
+                        android:text="✓"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/bg_pill_primary" />
+                </LinearLayout>
+
+                <!-- Row 2: 5 Colors + 3 Stroke Widths -->
+                <LinearLayout
+                    android:id="@+id/penStyleRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+
+            <!-- Download / Loading Overlay -->
+            <LinearLayout
+                android:id="@+id/loadingOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="24dp"
+                android:background="#F2F8FAFC"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:id="@+id/packSpinner"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp" />
+
+                <TextView
+                    android:id="@+id/tvLoadingStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="Downloading pack..."
+                    android:textSize="13sp"
+                    android:textColor="@color/ink_dark" />
+
+                <TextView
+                    android:id="@+id/btnRetryDownload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_pill_primary"
+                    android:gravity="center"
+                    android:paddingHorizontal="20dp"
+                    android:text="Retry"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Floating Exit-Fullscreen Button (visible only in Fullscreen mode) -->
+            <TextView
+                android:id="@+id/btnExitFullscreen"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_sharp_btn"
+                android:gravity="center"
+                android:text="✕"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/ink_dark"
+                android:alpha="0.88"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <!-- Minimal Bottom Dock (Section Pills + SeekBar + Full Controls) -->
         <LinearLayout
-            android:id="@+id/audioControlsBox"
+            android:id="@+id/bottomDock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/surface"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="6dp"
+            android:layoutDirection="ltr">
 
-            <!-- Row 2: SeekBar + Timestamps -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/border" />
+
+            <!-- Row 1: Prev Page + Section Pills (A/B/C/D) + Auto-Next + A-B + Next Page -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="24dp"
+                android:layout_height="30dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/tvPosTime"
-                    android:layout_width="36dp"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/btnPrevPage"
+                    android:layout_width="32dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bg_sharp_btn"
                     android:gravity="center"
-                    android:text="0:00"
-                    android:textSize="11sp"
-                    android:textColor="@color/ink_muted" />
+                    android:text="‹"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/ink_dark" />
 
-                <SeekBar
-                    android:id="@+id/audioSeekBar"
+                <HorizontalScrollView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:progressTint="@color/primary"
-                    android:thumbTint="@color/primary" />
+                    android:scrollbars="none"
+                    android:fillViewport="true">
+
+                    <LinearLayout
+                        android:id="@+id/sectionPillsRow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingHorizontal="4dp" />
+                </HorizontalScrollView>
 
                 <TextView
-                    android:id="@+id/tvDurTime"
-                    android:layout_width="36dp"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/btnNextPage"
+                    android:layout_width="32dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bg_sharp_btn"
                     android:gravity="center"
-                    android:text="0:00"
-                    android:textSize="11sp"
-                    android:textColor="@color/ink_muted" />
+                    android:text="›"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/ink_dark" />
             </LinearLayout>
 
-            <!-- Row 3: Speed, PrevSec, -5s, Play/Pause, +5s, NextSec, Repeat -->
-            <LinearLayout
+            <TextView
+                android:id="@+id/tvAudioStatus"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="2dp">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:textColor="@color/primary"
+                android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/btnSpeed"
-                    android:layout_width="44dp"
-                    android:layout_height="28dp"
-                    android:background="@drawable/bg_sharp_btn"
-                    android:gravity="center"
-                    android:text="1x"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/ink_dark" />
+            <!-- Audio Controls Container (hidden on non-unit pages) -->
+            <LinearLayout
+                android:id="@+id/audioControlsBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+                <!-- Row 2: SeekBar + Timestamps -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/btnPrevSec"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:gravity="center"
-                    android:text="⏮"
-                    android:textSize="15sp"
-                    android:textColor="@color/ink_dark" />
+                    <TextView
+                        android:id="@+id/tvPosTime"
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0:00"
+                        android:textSize="11sp"
+                        android:textColor="@color/ink_muted" />
 
-                <TextView
-                    android:id="@+id/btnRew5"
-                    android:layout_width="42dp"
-                    android:layout_height="28dp"
-                    android:layout_marginHorizontal="4dp"
-                    android:background="@drawable/bg_pill_neutral"
-                    android:gravity="center"
-                    android:text="«5s"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/ink_dark" />
+                    <SeekBar
+                        android:id="@+id/audioSeekBar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:progressTint="@color/primary"
+                        android:thumbTint="@color/primary" />
 
-                <TextView
-                    android:id="@+id/btnPlayPause"
-                    android:layout_width="40dp"
+                    <TextView
+                        android:id="@+id/tvDurTime"
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0:00"
+                        android:textSize="11sp"
+                        android:textColor="@color/ink_muted" />
+                </LinearLayout>
+
+                <!-- Row 3: Speed, PrevSec, -5s, Play/Pause, +5s, NextSec, Repeat -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/bg_pill_primary"
-                    android:gravity="center"
-                    android:text="▶"
-                    android:textSize="16sp"
-                    android:textColor="#FFFFFF" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="2dp">
 
-                <TextView
-                    android:id="@+id/btnFwd5"
-                    android:layout_width="42dp"
-                    android:layout_height="28dp"
-                    android:layout_marginHorizontal="4dp"
-                    android:background="@drawable/bg_pill_neutral"
-                    android:gravity="center"
-                    android:text="5s»"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/ink_dark" />
+                    <TextView
+                        android:id="@+id/btnSpeed"
+                        android:layout_width="44dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/bg_sharp_btn"
+                        android:gravity="center"
+                        android:text="1x"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/ink_dark" />
 
-                <TextView
-                    android:id="@+id/btnNextSec"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:gravity="center"
-                    android:text="⏭"
-                    android:textSize="15sp"
-                    android:textColor="@color/ink_dark" />
+                    <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
 
-                <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+                    <TextView
+                        android:id="@+id/btnPrevSec"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:text="⏮"
+                        android:textSize="15sp"
+                        android:textColor="@color/ink_dark" />
 
-                <TextView
-                    android:id="@+id/btnRepeat"
-                    android:layout_width="32dp"
-                    android:layout_height="28dp"
-                    android:background="@drawable/bg_sharp_btn"
-                    android:gravity="center"
-                    android:text="↻"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/ink_muted" />
+                    <TextView
+                        android:id="@+id/btnRew5"
+                        android:layout_width="42dp"
+                        android:layout_height="28dp"
+                        android:layout_marginHorizontal="4dp"
+                        android:background="@drawable/bg_pill_neutral"
+                        android:gravity="center"
+                        android:text="«5s"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/ink_dark" />
+
+                    <TextView
+                        android:id="@+id/btnPlayPause"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_pill_primary"
+                        android:gravity="center"
+                        android:text="▶"
+                        android:textSize="16sp"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/btnFwd5"
+                        android:layout_width="42dp"
+                        android:layout_height="28dp"
+                        android:layout_marginHorizontal="4dp"
+                        android:background="@drawable/bg_pill_neutral"
+                        android:gravity="center"
+                        android:text="5s»"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/ink_dark" />
+
+                    <TextView
+                        android:id="@+id/btnNextSec"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:text="⏭"
+                        android:textSize="15sp"
+                        android:textColor="@color/ink_dark" />
+
+                    <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/btnRepeat"
+                        android:layout_width="32dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/bg_sharp_btn"
+                        android:gravity="center"
+                        android:text="↻"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/ink_muted" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <!-- Symbolic Minimalist Animated Splash Screen Overlay -->
+    <LinearLayout
+        android:id="@+id/splashOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:focusable="true"
+        android:layoutDirection="ltr"
+        android:paddingHorizontal="28dp">
+
+        <TextView
+            android:id="@+id/splashEnglish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ENGLISH"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:textColor="#0F172A"
+            android:alpha="0" />
+
+        <TextView
+            android:id="@+id/splashGrammar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GRAMMAR"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:textColor="#0F172A"
+            android:alpha="0" />
+
+        <TextView
+            android:id="@+id/splashInUse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IN USE"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            android:textColor="#3B82C4"
+            android:alpha="0" />
+
+        <View
+            android:id="@+id/splashYellowBar"
+            android:layout_width="170dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="12dp"
+            android:background="#FACC15"
+            android:scaleX="0" />
+
+        <TextView
+            android:id="@+id/splashAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Fifth Edition · Raymond Murphy"
+            android:textSize="13sp"
+            android:letterSpacing="0.04"
+            android:textColor="#E2E8F0"
+            android:alpha="0" />
+    </LinearLayout>
+
+</FrameLayout>

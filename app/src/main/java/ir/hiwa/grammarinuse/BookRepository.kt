@@ -38,7 +38,9 @@ class BookRepository(context: Context) {
                     unitTitle = o.getString("unitTitle"),
                     bookPage = o.getInt("bookPage"),
                     kind = o.getString("kind"),
-                    imagePath = o.getString("imagePath"),
+                    pdfPath = o.optString("pdfPath", ""),
+                    pdfPageIndex = o.optInt("pdfPageIndex", -1),
+                    imagePath = o.optString("imagePath", ""),
                     aspectRatio = o.optDouble("aspectRatio", 0.7386).toFloat(),
                     sections = sList
                 )
@@ -60,7 +62,8 @@ class BookRepository(context: Context) {
                     exerciseBookPage = o.getInt("exerciseBookPage"),
                     lessonPageIndex = o.getInt("lessonPageIndex"),
                     exercisePageIndex = o.getInt("exercisePageIndex"),
-                    answerKey = o.optString("answerKey", "")
+                    answerKey = o.optString("answerKey", ""),
+                    answerKeyImagePath = o.optString("answerKeyImagePath", "")
                 )
             )
         }
@@ -124,6 +127,7 @@ class BookRepository(context: Context) {
                         id = o.getString("id"),
                         unitNumbers = uNums,
                         sourceLabel = o.getString("sourceLabel"),
+                        instruction = o.optString("instruction", ""),
                         prompt = o.getString("prompt"),
                         acceptedAnswers = acc
                     )
